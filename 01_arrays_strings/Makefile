@@ -4,7 +4,8 @@
 # ==============================================================================
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Wpedantic -std=c99 -g
+# Added -I. to explicitly look in the current folder for safe_array.h
+CFLAGS = -Wall -Wextra -Wpedantic -std=c99 -g -I.
 
 # Target Executable
 TARGET = test_suite
