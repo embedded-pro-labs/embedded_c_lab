@@ -14,12 +14,19 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up GCC and Make
+    - name: Set up GCC
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential
 
-    - name: Build and Run Module 1 (Arrays & Strings) Tests
+    - name: Find, Compile, and Run safe_array Tests
       run: |
-        cd 01_arrays_strings
-        make
+        # Search the entire repository for the source files and compile them together
+        SRC_DIR=$(find . -name "safe_array.c" -exec dirname {} \;)
+        echo "Found source directory at: $SRC_DIR"
+        
+        # Compile directly using gcc from the located directory
+        gcc -Wall -Wextra -Wpedantic -std=c99 -g -I"$SRC_DIR" "$SRC_DIR/safe_array.c" "$SRC_DIR/test_safe_array.c" -o test_suite
+        
+        # Execute the test suite and output results
+        ./test_suite
